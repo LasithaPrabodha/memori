@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
   Alert,
   Image,
@@ -51,31 +50,31 @@ const DiaryItem: React.FC<DiaryItemProps> = props => {
   }, [props.memory.date]);
 
   return (
-    <View style={styles.memoryitem}>
-      <Text style={styles.memorydate}>{date}</Text>
-      <Text style={styles.memorytitle}>{props.memory.title}</Text>
-      {image && (
-        <View style={styles.imagecomponent}>
+    <View style={styles.memoryItem}>
+      <Text style={styles.memoryDate}>{date}</Text>
+      <Text style={styles.memoryTitle}>{props.memory.title}</Text>
+      {image !== '' && (
+        <View style={styles.imageComponent}>
           <Image
-            width={Dimensions.get('window').width - 70}
-            style={styles.memoryimage}
+            style={styles.image}
             source={{uri: image}}
+            resizeMode="cover"
           />
         </View>
       )}
       {props.memory.entry !== '' && (
-        <Text style={styles.memoryentry}>{props.memory.entry}</Text>
+        <Text style={styles.description}>{props.memory.entry}</Text>
       )}
-      <View style={styles.wrapfix}>
+      <View style={styles.wrapFix}>
         {props.memory.isSpecial && (
-          <View style={styles.specialemotion}>
-            <Text style={styles.specialemotiontext}>⭐ Special</Text>
+          <View style={styles.specialEmotion}>
+            <Text style={styles.specialEmotionText}>⭐ Special</Text>
           </View>
         )}
         {props.memory.emotion.map(data => {
           return (
-            <View key={data.emotion} style={styles.memoryemotion}>
-              <Text style={styles.memoryemotiontext}>
+            <View key={data.emotion} style={styles.memoryEmotion}>
+              <Text style={styles.memoryEmotionText}>
                 {data.emoji} {data.emotion}
               </Text>
             </View>
@@ -83,23 +82,25 @@ const DiaryItem: React.FC<DiaryItemProps> = props => {
         })}
       </View>
       <TouchableOpacity style={styles.trash} onPress={deleteThisMemory}>
-        <MaterialCommunityIcons name="trash-can-outline" size={18} />
+        <MaterialCommunityIcons
+          name="trash-can-outline"
+          size={18}
+          color="#717172"
+        />
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  memoryitem: {
+  memoryItem: {
     marginTop: 5,
     marginBottom: 10,
-    marginLeft: 15,
-    marginRight: 15,
+    marginHorizontal: 15,
     paddingTop: 15,
-    paddingBottom: 12.5,
+    paddingBottom: 12,
     borderRadius: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingHorizontal: 15,
     backgroundColor: '#FDFDFD',
     shadowColor: '#000',
     shadowOffset: {
@@ -110,22 +111,22 @@ const styles = StyleSheet.create({
     shadowRadius: 1.84,
     elevation: 2,
   },
-  memorydate: {
+  memoryDate: {
     color: '#717172',
     fontSize: 15,
   },
-  memorytitle: {
+  memoryTitle: {
     color: '#082A2A',
     fontWeight: '600',
     fontSize: 23,
     marginTop: 5,
   },
-  memoryentry: {
+  description: {
     fontSize: 15,
     lineHeight: 22,
     marginTop: 5,
   },
-  memoryemotion: {
+  memoryEmotion: {
     margin: 3,
     borderRadius: 10,
     padding: 5,
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     borderColor: '#006666',
     backgroundColor: '#F0F8F8',
   },
-  specialemotion: {
+  specialEmotion: {
     margin: 3,
     borderRadius: 10,
     padding: 5,
@@ -141,27 +142,27 @@ const styles = StyleSheet.create({
     borderColor: '#FF836B',
     backgroundColor: '#FFF6F4',
   },
-  memoryemotiontext: {
+  memoryEmotionText: {
     color: '#338282',
     fontSize: 14,
   },
-  specialemotiontext: {
+  specialEmotionText: {
     color: '#FF836B',
     fontSize: 14,
   },
-  wrapfix: {
+  wrapFix: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     marginLeft: -3,
     marginTop: 10,
   },
-  memoryimage: {
+  image: {
     marginTop: 10,
     marginBottom: 10,
-    borderRadius: 10,
     height: 200,
+    borderRadius: 10,
   },
-  imagecomponent: {
+  imageComponent: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

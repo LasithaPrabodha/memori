@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "164933517436",
+    "project_id": "mood-app-12508",
+    "storage_bucket": "mood-app-12508.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164933517436:android:363f51e3c20376cff789f9",
+        "android_client_info": {
+          "package_name": "com.mymemories"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "164933517436-4nhf8aa6g9u9djau29ol1ufmfkdoq3dn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mymemories",
+            "certificate_hash": "d8a00dc5fbc51510f4efe632810dafa25e23841e"
+          }
+        },
+        {
+          "client_id": "164933517436-mt7rtrehuvrrusivmqaisjqo7tu0puvc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA_M6Q1MnVykMDVQPnsJskqDLMKCFeRA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "164933517436-mt7rtrehuvrrusivmqaisjqo7tu0puvc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "164933517436-mb9v1p75a4fi7cv300v4h9fn3afjhgup.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.MyMemories"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -48,5 +48,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like access to your photo gallery to upload a photo to your diary entry</string>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use your camera to upload a photo to your diary entry</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use your microphone (for videos)</string>
+
+	<key>UIAppFonts</key>
+	<array>
+		<string>MaterialIcons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+	</array>
 </dict>
 </plist>

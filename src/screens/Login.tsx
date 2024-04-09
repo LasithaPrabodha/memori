@@ -59,7 +59,7 @@ export default function Login() {
         source={require('../assets/placeholders/diary.png')}
         style={styles.image}
       />
-      <Text style={styles.title}>My Memories</Text>
+      <Text style={styles.title}>Memori</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -83,7 +83,9 @@ export default function Login() {
         <TouchableOpacity
           style={styles.buttonRegister}
           onPress={handleRegisterPress}>
-          <Text style={styles.buttonTextRegister}>Register</Text>
+          <Text style={styles.buttonTextRegister}>
+            New to Memori? Sign Up here!
+          </Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

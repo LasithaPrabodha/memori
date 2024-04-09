@@ -60,7 +60,7 @@ export default function Register() {
         source={require('../assets/placeholders/diary.png')}
         style={styles.image}
       />
-      <Text style={styles.title}>My Memories</Text>
+      <Text style={styles.title}>Memori</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -85,7 +85,7 @@ export default function Register() {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleRegister}>
-          <Text style={styles.buttonText}>Register</Text>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

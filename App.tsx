@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, StatusBar, Text, TouchableOpacity} from 'react-native';
+import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from 'react-native-splash-screen';
@@ -7,6 +7,7 @@ import Diary from './src/screens/Diary';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import LogoutButton from './src/components/Buttons/LogoutButton';
 
 const RootStack = createStackNavigator();
 
@@ -32,9 +33,6 @@ const App = () => {
     return null;
   }
 
-  const onLogutPressed = () => {
-    auth().signOut();
-  };
   return (
     <NavigationContainer>
       <StatusBar translucent={true} barStyle="dark-content" />
@@ -43,25 +41,24 @@ const App = () => {
           headerStyle: {
             backgroundColor: '#F0F7F7',
           },
+          headerTintColor: '#006565',
         }}>
         {user ? (
           <RootStack.Screen
-            name="My Diary"
+            name="Memori"
             component={Diary}
             options={{
-              headerRight: () => (
-                <TouchableOpacity
-                  onPress={onLogutPressed}
-                  style={{marginEnd: 16}}>
-                  <Text>Logout</Text>
-                </TouchableOpacity>
-              ),
+              headerRight: () => <LogoutButton />,
             }}
           />
         ) : (
           <>
             <RootStack.Screen name="Login" component={Login} />
-            <RootStack.Screen name="Register" component={Register} />
+            <RootStack.Screen
+              name="Register"
+              options={{title: 'Sign Up to Memori'}}
+              component={Register}
+            />
           </>
         )}
       </RootStack.Navigator>

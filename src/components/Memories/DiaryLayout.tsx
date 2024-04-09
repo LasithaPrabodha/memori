@@ -1,4 +1,11 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {View, FlatList, ListRenderItem, Text, StyleSheet} from 'react-native';
 import DiaryItem from './DiaryItem';
 import Placeholder from './Placeholder';
@@ -6,6 +13,7 @@ import NoMemoryToday from './NoMemoryToday';
 import {IDiaryItemWithId} from '../../interfaces/DiaryItem';
 import MemoriesService from '../../services/MemoriesService';
 import moment from 'moment';
+import {AppContext} from '../../../App';
 
 interface MemoryLayoutProps {
   toggleModal: () => void;
@@ -20,23 +28,33 @@ const DiaryLayout: React.FC<MemoryLayoutProps> = props => {
   const [loadingMore, setLoadingMore] = useState(false);
   const canMomentum = useRef(false);
 
+  const {date} = useContext(AppContext);
+
   const memoriesService = MemoriesService.getInstance();
 
-  const fetchDiaryItems = useCallback(async () => {
-    setLoading(true);
-    const memories = await memoriesService.loadList(5);
-    const canShowTodayQ =
-      memories.findIndex(m => moment(m.date).isSame(new Date(), 'day')) === -1;
+  const fetchDiaryItems = useCallback(
+    async (_date: Date | null = null) => {
+      setLoading(true);
+      const memories = await memoriesService.loadList(5, _date);
+      const canShowTodayQ =
+        memories.findIndex(m => moment(m.date).isSame(new Date(), 'day')) ===
+        -1;
 
-    setShowMemoryTodayItem(canShowTodayQ);
+      setShowMemoryTodayItem(canShowTodayQ);
 
-    setDiaryItems(memories);
-    setLoading(false);
-  }, [memoriesService]);
+      setDiaryItems(memories);
+      setLoading(false);
+    },
+    [memoriesService],
+  );
 
   useEffect(() => {
     fetchDiaryItems();
   }, [fetchDiaryItems, props.onAddNewMemory]);
+
+  useEffect(() => {
+    fetchDiaryItems(date);
+  }, [date, fetchDiaryItems]);
 
   const onMomentumScrollBegin = () => {
     canMomentum.current = true;
@@ -79,7 +97,7 @@ const DiaryLayout: React.FC<MemoryLayoutProps> = props => {
       ListHeaderComponent={
         <>
           <View style={{paddingTop: 10}} />
-          {showMemoryTodayItem && (
+          {showMemoryTodayItem && !date && (
             <NoMemoryToday toggleModal={props.toggleModal} />
           )}
         </>

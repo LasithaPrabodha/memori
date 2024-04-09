@@ -20,6 +20,7 @@ export default class MemoriesService {
 
   private getUserMemories() {
     const uid = auth().currentUser?.uid;
+
     return firestore().collection(`Users/${uid}/Memories`);
   }
 
@@ -46,13 +47,28 @@ export default class MemoriesService {
     }
   }
 
-  public async loadList(limit = 5): Promise<IDiaryItemWithId[]> {
+  public async loadList(
+    limit = 5,
+    date: Date | null = null,
+  ): Promise<IDiaryItemWithId[]> {
     try {
       this.reachedEnd = false;
 
       console.log('loading');
 
-      this.list = await this.getUserMemories()
+      let query;
+      if (date) {
+        date.setUTCHours(0, 0, 0, 0);
+        const date2 = new Date(date);
+        date2.setUTCHours(23, 59, 0, 0);
+        query = this.getUserMemories()
+          .where('date', '>', date)
+          .where('date', '<', date2);
+      } else {
+        query = this.getUserMemories();
+      }
+
+      this.list = await query
         .orderBy('date', 'desc')
         .limit(limit)
         .get()

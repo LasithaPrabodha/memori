@@ -1,5 +1,7 @@
 # Memori
 
+Memory is an app for iPhones where you can write about your day, pick how you feel, and keep your favorite memories safe. It reminds you to write every day, helps you track your mood, and lets you save special moments. You can also see cool stats about how you've been feeling over time. It's like having a happy place in your pocket!
+
 ![Screenshots](/doc/screenshots.png)
 
 ## How to get started?

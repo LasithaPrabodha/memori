@@ -20,7 +20,14 @@ const App = () => {
       <RootStack.Navigator>
         <RootStack.Screen name="Login" component={Login} />
         <RootStack.Screen name="Register" component={Register} />
-        <RootStack.Screen name="My Diary" component={Diary} />
+        <RootStack.Screen
+          name="My Diary"
+          component={Diary}
+          options={{
+            headerLeft: null,
+            gestureEnabled: false,
+          }}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );

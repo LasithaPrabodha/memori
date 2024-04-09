@@ -8,7 +8,7 @@
 - run `npx pod-install`
 - run `npm start`
 
-## Members
+## Group Members
 
 - Weligampola Gedara, Lasitha Prabodha Weligampola - 1150485 [LasithaPrabodha](https://github.com/LasithaPrabodha)
 - Ponce Gamez, Moises Guillermo - 1178657 [poncegamez1](https://github.com/poncegamez1)

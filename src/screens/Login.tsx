@@ -29,7 +29,7 @@ export default function Login() {
         password,
       );
       if (userCredential) {
-        navigation.navigate('Diary');
+        navigation.navigate('My Diary');
         setEmail('');
         setPassword('');
       }

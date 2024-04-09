@@ -36,7 +36,7 @@ export default function Register() {
         Alert.alert('Please insert your email');
         return;
       } else {
-        const userCredential = await auth().signInWithEmailAndPassword(
+        const userCredential = await auth().createUserWithEmailAndPassword(
           email,
           password,
         );

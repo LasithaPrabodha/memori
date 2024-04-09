@@ -12,26 +12,40 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [confirmedPassword, setConfirmedPassword] = useState('');
   const navigation = useNavigation();
 
-  const handleRegisterPress = () => {
-    navigation.navigate('Register');
-  };
-
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
-      const userCredential = await auth().signInWithEmailAndPassword(
-        email,
-        password,
-      );
-      if (userCredential) {
-        navigation.navigate('Diary');
-        setEmail('');
-        setPassword('');
+      if (password !== confirmedPassword) {
+        Alert.alert(
+          'Passwords do not match',
+          'Please enter matching passwords.',
+        );
+        return;
+      } else if (password === '' && email === '') {
+        Alert.alert('Please insert your email and password');
+        return;
+      } else if (password === '') {
+        Alert.alert('Please insert your password');
+        return;
+      } else if (email === '') {
+        Alert.alert('Please insert your email');
+        return;
+      } else {
+        const userCredential = await auth().signInWithEmailAndPassword(
+          email,
+          password,
+        );
+        if (userCredential) {
+          navigation.navigate('My Diary');
+          setEmail('');
+          setPassword('');
+          setConfirmedPassword('');
+        }
       }
     } catch (error) {
       Alert.alert('Login Failed', error.message);
@@ -59,16 +73,17 @@ export default function Login() {
           onChangeText={text => setPassword(text)}
           secureTextEntry
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm password"
+          value={confirmedPassword}
+          onChangeText={text => setConfirmedPassword(text)}
+          secureTextEntry
+        />
       </View>
-
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.buttonLogin} onPress={handleLogin}>
-          <Text style={styles.buttonTextLogin}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonRegister}
-          onPress={handleRegisterPress}>
-          <Text style={styles.buttonTextRegister}>Register</Text>
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -99,29 +114,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  buttonLogin: {
+  button: {
     backgroundColor: '#006565',
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 20,
   },
-  buttonRegister: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginBottom: 20,
-    borderColor: '#006565',
-    borderWidth: 1,
-  },
-  buttonTextLogin: {
+  buttonText: {
     color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  buttonTextRegister: {
-    color: '#006565',
     textAlign: 'center',
     fontWeight: 'bold',
   },

@@ -50,7 +50,7 @@ const NewMemoryModal: React.FC<NewMemoryModalProps> = ({
   };
 
   const handleSubmit = async () => {
-    // TODO: add memory
+    setProcessActive(true);
     const memory: IDiaryItem = {
       date,
       emotion,
@@ -115,6 +115,7 @@ const NewMemoryModal: React.FC<NewMemoryModalProps> = ({
                 text={`Create with ${emotion.length} emotion${
                   emotion.length !== 1 ? 's' : ''
                 }`}
+                disabled={processActive}
                 onPress={handleSubmit}
               />
             ) : (

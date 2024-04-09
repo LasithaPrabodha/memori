@@ -16,7 +16,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const handleRegisterPress = () => {
     navigation.navigate('Register');
@@ -24,17 +24,32 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
+      if (password === '' && email === '') {
+        Alert.alert('Please insert your email and password');
+        return;
+      } else if (password === '') {
+        Alert.alert('Please insert your password');
+        return;
+      } else if (email === '') {
+        Alert.alert('Please insert your email');
+        return;
+      }
+
       const userCredential = await auth().signInWithEmailAndPassword(
         email,
         password,
       );
       if (userCredential) {
-        navigation.navigate('Diary');
         setEmail('');
         setPassword('');
       }
     } catch (error) {
-      Alert.alert('Login Failed', error.message);
+      let errorMessage = 'Failed to login';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      Alert.alert('Login Failed', errorMessage);
     }
   };
 
@@ -107,13 +122,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonRegister: {
-    backgroundColor: '#fff',
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 20,
-    borderColor: '#006565',
-    borderWidth: 1,
   },
   buttonTextLogin: {
     color: '#fff',
@@ -126,14 +138,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   image: {
-    width: '50%',
-    height: undefined,
-    aspectRatio: 1,
-    marginBottom: 20,
+    width: 242,
+    height: 215,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 10,
     marginBottom: 40,
   },
 });

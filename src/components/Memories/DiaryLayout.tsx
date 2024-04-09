@@ -23,6 +23,7 @@ const DiaryLayout: React.FC<MemoryLayoutProps> = props => {
   const memoriesService = MemoriesService.getInstance();
 
   const fetchDiaryItems = useCallback(async () => {
+    setLoading(true);
     const memories = await memoriesService.loadList(5);
     const canShowTodayQ =
       memories.findIndex(m => moment(m.date).isSame(new Date(), 'day')) === -1;
@@ -30,6 +31,7 @@ const DiaryLayout: React.FC<MemoryLayoutProps> = props => {
     setShowMemoryTodayItem(canShowTodayQ);
 
     setDiaryItems(memories);
+    setLoading(false);
   }, [memoriesService]);
 
   useEffect(() => {
@@ -89,6 +91,8 @@ const DiaryLayout: React.FC<MemoryLayoutProps> = props => {
           )}
         </View>
       }
+      onMomentumScrollBegin={onMomentumScrollBegin}
+      onMomentumScrollEnd={onMomentumScrollEnd}
       onRefresh={fetchDiaryItems}
       refreshing={refreshing}
       ListEmptyComponent={<Placeholder />}

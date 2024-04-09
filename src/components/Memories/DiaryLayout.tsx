@@ -13,7 +13,7 @@ import NoMemoryToday from './NoMemoryToday';
 import {IDiaryItemWithId} from '../../interfaces/DiaryItem';
 import MemoriesService from '../../services/MemoriesService';
 import moment from 'moment';
-import {AppContext} from '../../../App';
+import {AppContext} from '../../App';
 
 interface MemoryLayoutProps {
   toggleModal: () => void;

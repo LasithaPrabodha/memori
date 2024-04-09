@@ -62,6 +62,8 @@ export default function Login() {
       <Text style={styles.title}>Memori</Text>
       <View style={styles.inputContainer}>
         <TextInput
+          inputMode="email"
+          autoCapitalize="none"
           style={styles.input}
           placeholder="Email"
           value={email}

@@ -3,12 +3,12 @@ import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from 'react-native-splash-screen';
-import Diary from './src/screens/Diary';
-import Login from './src/screens/Login';
-import Register from './src/screens/Register';
+import Diary from './screens/Diary';
+import Login from './screens/Login';
+import Register from './screens/Register';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import LogoutButton from './src/components/Buttons/LogoutButton';
-import Calendar from './src/components/Buttons/Calendar';
+import LogoutButton from './components/Buttons/LogoutButton';
+import Calendar from './components/Buttons/Calendar';
 
 const RootStack = createStackNavigator();
 export const AppContext = createContext({date: new Date()});
@@ -20,9 +20,9 @@ const App = () => {
   const appProviderValue = useMemo(() => ({date}), [date]);
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(user => {
-      if (user) {
-        setUser(user);
+    const subscriber = auth().onAuthStateChanged(fuser => {
+      if (fuser) {
+        setUser(fuser);
         setTimeout(() => SplashScreen.hide(), 350);
       } else {
         setUser(null);
@@ -61,10 +61,19 @@ const App = () => {
             />
           ) : (
             <>
-              <RootStack.Screen name="Login" component={Login} />
+              <RootStack.Screen
+                name="Login"
+                component={Login}
+                options={{
+                  animationTypeForReplace: 'pop',
+                }}
+              />
               <RootStack.Screen
                 name="Register"
-                options={{title: 'Sign Up to Memori'}}
+                options={{
+                  animationTypeForReplace: 'pop',
+                  title: 'Sign Up to Memori',
+                }}
                 component={Register}
               />
             </>

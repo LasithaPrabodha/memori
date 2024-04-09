@@ -39,6 +39,10 @@ const Diary = () => {
   );
 };
 
+Diary.navigationOptions = {
+  headerLeft: null,
+};
+
 const styles = StyleSheet.create({
   diaryContainer: {
     flex: 1,

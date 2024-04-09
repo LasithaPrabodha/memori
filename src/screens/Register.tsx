@@ -7,12 +7,50 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Image,
+  Alert,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmedPasword, setConfirmedPassword] = useState('');
+  const [confirmedPassword, setConfirmedPassword] = useState('');
+  const navigation = useNavigation();
+
+  const handleRegister = async () => {
+    try {
+      if (password !== confirmedPassword) {
+        Alert.alert(
+          'Passwords do not match',
+          'Please enter matching passwords.',
+        );
+        return;
+      } else if (password === '' && email === '') {
+        Alert.alert('Please insert your email and password');
+        return;
+      } else if (password === '') {
+        Alert.alert('Please insert your password');
+        return;
+      } else if (email === '') {
+        Alert.alert('Please insert your email');
+        return;
+      } else {
+        const userCredential = await auth().signInWithEmailAndPassword(
+          email,
+          password,
+        );
+        if (userCredential) {
+          navigation.navigate('My Diary');
+          setEmail('');
+          setPassword('');
+          setConfirmedPassword('');
+        }
+      }
+    } catch (error) {
+      Alert.alert('Login Failed', error.message);
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -38,13 +76,13 @@ export default function Register() {
         <TextInput
           style={styles.input}
           placeholder="Confirm password"
-          value={confirmedPasword}
+          value={confirmedPassword}
           onChangeText={text => setConfirmedPassword(text)}
           secureTextEntry
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
       </View>
@@ -66,7 +104,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#006565',
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
@@ -77,7 +115,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   button: {
-    backgroundColor: '#388e3c',
+    backgroundColor: '#006565',
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,

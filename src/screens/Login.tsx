@@ -7,8 +7,10 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Image,
+  Alert,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -18,6 +20,22 @@ export default function Login() {
 
   const handleRegisterPress = () => {
     navigation.navigate('Register');
+  };
+
+  const handleLogin = async () => {
+    try {
+      const userCredential = await auth().signInWithEmailAndPassword(
+        email,
+        password,
+      );
+      if (userCredential) {
+        navigation.navigate('Diary');
+        setEmail('');
+        setPassword('');
+      }
+    } catch (error) {
+      Alert.alert('Login Failed', error.message);
+    }
   };
 
   return (
@@ -44,7 +62,7 @@ export default function Login() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.buttonLogin} onPress={() => {}}>
+        <TouchableOpacity style={styles.buttonLogin} onPress={handleLogin}>
           <Text style={styles.buttonTextLogin}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -71,7 +89,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#006565',
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
@@ -82,7 +100,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   buttonLogin: {
-    backgroundColor: '#388e3c',
+    backgroundColor: '#006565',
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -94,7 +112,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 20,
-    borderColor: '#388e3c',
+    borderColor: '#006565',
     borderWidth: 1,
   },
   buttonTextLogin: {
@@ -103,7 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buttonTextRegister: {
-    color: 'black',
+    color: '#006565',
     textAlign: 'center',
     fontWeight: 'bold',
   },

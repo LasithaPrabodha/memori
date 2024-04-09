@@ -831,6 +831,9 @@ PODS:
     - React-Core (= 0.73.6)
     - React-jsi (= 0.73.6)
     - ReactCommon/turbomodule/core (= 0.73.6)
+  - Firebase/Auth (10.23.1):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 10.23.0)
   - Firebase/CoreOnly (10.23.1):
     - FirebaseCore (= 10.23.1)
   - Firebase/Firestore (10.23.1):
@@ -840,6 +843,13 @@ PODS:
     - Firebase/CoreOnly
     - FirebaseStorage (~> 10.23.0)
   - FirebaseAppCheckInterop (10.23.0)
+  - FirebaseAuth (10.23.0):
+    - FirebaseAppCheckInterop (~> 10.17)
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GTMSessionFetcher/Core (< 4.0, >= 2.1)
+    - RecaptchaInterop (~> 100.0)
   - FirebaseAuthInterop (10.23.0)
   - FirebaseCore (10.23.1):
     - FirebaseCoreInternal (~> 10.0)
@@ -878,15 +888,28 @@ PODS:
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - fmt (6.2.1)
   - glog (0.3.5)
+  - GoogleUtilities/AppDelegateSwizzler (7.13.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+    - GoogleUtilities/Privacy
   - GoogleUtilities/Environment (7.13.0):
     - GoogleUtilities/Privacy
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.13.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Privacy
+  - GoogleUtilities/Network (7.13.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Privacy
+    - GoogleUtilities/Reachability
   - "GoogleUtilities/NSData+zlib (7.13.0)":
     - GoogleUtilities/Privacy
   - GoogleUtilities/Privacy (7.13.0)
+  - GoogleUtilities/Reachability (7.13.0):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
   - "gRPC-C++ (1.62.1)":
     - "gRPC-C++/Implementation (= 1.62.1)"
     - "gRPC-C++/Interface (= 1.62.1)"
@@ -2027,11 +2050,16 @@ PODS:
     - React-jsi (= 0.73.6)
     - React-logger (= 0.73.6)
     - React-perflogger (= 0.73.6)
+  - RecaptchaInterop (100.0.0)
   - RNCMaskedView (0.1.11):
     - React
   - RNFBApp (19.1.2):
     - Firebase/CoreOnly (= 10.23.1)
     - React-Core
+  - RNFBAuth (19.1.2):
+    - Firebase/Auth (= 10.23.1)
+    - React-Core
+    - RNFBApp
   - RNFBFirestore (19.1.2):
     - Firebase/Firestore (= 10.23.1)
     - nanopb (< 2.30910.0, >= 2.30908.0)
@@ -2119,6 +2147,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -2133,6 +2162,7 @@ SPEC REPOS:
     - BoringSSL-GRPC
     - Firebase
     - FirebaseAppCheckInterop
+    - FirebaseAuth
     - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreExtension
@@ -2150,6 +2180,7 @@ SPEC REPOS:
     - libevent
     - nanopb
     - PromisesObjC
+    - RecaptchaInterop
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2262,6 +2293,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/masked-view"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBAuth:
+    :path: "../node_modules/@react-native-firebase/auth"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBStorage:
@@ -2286,6 +2319,7 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 9f2b8b243131565335437dba74923a8d3015e780
   Firebase: cf09623f98ae25a3ad484e23c7e0e5f464152d80
   FirebaseAppCheckInterop: a1955ce8c30f38f87e7d091630e871e91154d65d
+  FirebaseAuth: 22eb85d3853141de7062bfabc131aa7d6335cade
   FirebaseAuthInterop: a458e398bb1e9b71b9b42d46e54acc666b021d0f
   FirebaseCore: c43f9f0437b50a965e930cac4ad243200d12a984
   FirebaseCoreExtension: cb88851781a24e031d1b58e0bd01eb1f46b044b5
@@ -2351,8 +2385,10 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 4fa81221f3bb96df737d682fa828b574bea3827c
   React-utils: a45dd70919baff681d43a4a457e9884ef96b4581
   ReactCommon: e168ee1704806f10f47ee8c7f825b5850b18eaea
+  RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNFBApp: 7b51b55651e3b84a4d14869f1e7eee40d69ffd15
+  RNFBAuth: 954c5c29d938473baed88a64b545fb690d6173a5
   RNFBFirestore: 1ea269ad806e0adc5234504fe85cf4b82bd0d8c8
   RNFBStorage: 39122bb169e1ebd6cdc19e4a6a30a37d215c8613
   RNGestureHandler: 0c8b0283d2aff561162b2f55c604d2f1f8e2c4ea

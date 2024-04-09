@@ -9,14 +9,12 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
-  const navigation = useNavigation();
 
   const handleRegister = async () => {
     try {
@@ -36,19 +34,23 @@ export default function Register() {
         Alert.alert('Please insert your email');
         return;
       } else {
-        const userCredential = await auth().signInWithEmailAndPassword(
+        const userCredential = await auth().createUserWithEmailAndPassword(
           email,
           password,
         );
         if (userCredential) {
-          navigation.navigate('My Diary');
           setEmail('');
           setPassword('');
           setConfirmedPassword('');
         }
       }
     } catch (error) {
-      Alert.alert('Login Failed', error.message);
+      let errorMessage = 'Failed to Register';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      Alert.alert('Login Failed', errorMessage);
     }
   };
 
@@ -127,14 +129,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   image: {
-    width: '50%',
-    height: undefined,
-    aspectRatio: 1,
-    marginBottom: 20,
+    width: 242,
+    height: 215,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 10,
     marginBottom: 40,
   },
 });

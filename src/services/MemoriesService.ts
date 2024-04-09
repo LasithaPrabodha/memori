@@ -3,7 +3,7 @@ import firestore, {
 } from '@react-native-firebase/firestore';
 import {IDiaryItem, IDiaryItemWithId} from '../interfaces/DiaryItem';
 import storage from '@react-native-firebase/storage';
-
+import auth from '@react-native-firebase/auth';
 export default class MemoriesService {
   private static instance: MemoriesService;
   private list: IDiaryItemWithId[] = [];
@@ -18,12 +18,18 @@ export default class MemoriesService {
     return MemoriesService.instance;
   }
 
+  private getUserMemories() {
+    const uid = auth().currentUser?.uid;
+    return firestore().collection(`Users/${uid}/Memories`);
+  }
+
   public async saveTransaction(memory: IDiaryItem) {
     const {image, ..._memory} = memory;
 
-    const doc = await firestore()
-      .collection('Memories')
-      .add({..._memory, created: firestore.FieldValue.serverTimestamp()});
+    const doc = await this.getUserMemories().add({
+      ..._memory,
+      created: firestore.FieldValue.serverTimestamp(),
+    });
 
     if (image) {
       const reference = storage().ref('/images/memories/' + doc.id);
@@ -32,7 +38,7 @@ export default class MemoriesService {
   }
 
   public async deleteMemory(id: string, hasImage: boolean) {
-    await firestore().collection('Memories').doc(id).delete();
+    await this.getUserMemories().doc(id).delete();
 
     if (hasImage) {
       const reference = storage().ref('/images/memories/' + id);
@@ -46,8 +52,7 @@ export default class MemoriesService {
 
       console.log('loading');
 
-      this.list = await firestore()
-        .collection('Memories')
+      this.list = await this.getUserMemories()
         .orderBy('date', 'desc')
         .limit(limit)
         .get()
@@ -86,15 +91,11 @@ export default class MemoriesService {
       return [];
     }
     console.log('loading more');
-    const prevLastDoc = await firestore()
-      .collection('Transactions')
-      .doc(last.id)
-      .get();
+    const prevLastDoc = await this.getUserMemories().doc(last.id).get();
 
     let nextList: IDiaryItemWithId[] = [];
     try {
-      nextList = await firestore()
-        .collection('Transactions')
+      nextList = await this.getUserMemories()
         .orderBy('date', 'desc')
         .startAt(prevLastDoc)
         .limit(limit)

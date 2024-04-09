@@ -8,17 +8,11 @@ import {
   KeyboardAvoidingView,
   Image,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const navigation = useNavigation();
-
-  const handleRegisterPress = () => {
-    navigation.navigate('Register');
-  };
+  const [confirmedPasword, setConfirmedPassword] = useState('');
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -41,16 +35,17 @@ export default function Login() {
           onChangeText={text => setPassword(text)}
           secureTextEntry
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm password"
+          value={confirmedPasword}
+          onChangeText={text => setConfirmedPassword(text)}
+          secureTextEntry
+        />
       </View>
-
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.buttonLogin} onPress={() => {}}>
-          <Text style={styles.buttonTextLogin}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonRegister}
-          onPress={handleRegisterPress}>
-          <Text style={styles.buttonTextRegister}>Register</Text>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -81,29 +76,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  buttonLogin: {
+  button: {
     backgroundColor: '#388e3c',
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 20,
   },
-  buttonRegister: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginBottom: 20,
-    borderColor: '#388e3c',
-    borderWidth: 1,
-  },
-  buttonTextLogin: {
+  buttonText: {
     color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  buttonTextRegister: {
-    color: 'black',
     textAlign: 'center',
     fontWeight: 'bold',
   },
